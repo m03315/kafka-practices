@@ -11,11 +11,11 @@ RUN apt-get -y update \
     && curl https://archive.apache.org/dist/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz -o zookeeper-3.4.6.tar.gz \
     && tar -zxf zookeeper-3.4.6.tar.gz \
     && mv zookeeper-3.4.6 /usr/local/zookeeper \
-    && mv /usr/local/zookeeper/conf/zoo_sample.cfg /usr/local/zookeeper/conf/zoo.cfg \ 
-    && mkdir -p /var/lib/zookeeper
+  #  && mkdir -p /var/lib/zookeeper \
+    && rm zookeeper-3.4.6.tar.gz
+
+ADD zoo.cfg /usr/local/zookeeper/conf/
 
 WORKDIR /usr/local/zookeeper/bin/
 
-CMD zkServer.sh start
-
-
+CMD ["zkServer.sh", "restart"]
