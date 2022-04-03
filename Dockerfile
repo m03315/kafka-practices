@@ -11,16 +11,11 @@ RUN apt-get -y update \
     && curl https://archive.apache.org/dist/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz -o zookeeper-3.4.6.tar.gz \
     && tar -zxf zookeeper-3.4.6.tar.gz \
     && mv zookeeper-3.4.6 /usr/local/zookeeper \
-    && mkdir -p /var/lib/zookeeper\
-    && echo '\
-    tickTime=2000 \n\
-    dataDir=/var/lib/zookeeper \n\
-    clientPort=2181 \n\
-    4lw.commands.whitelist=* \n\
-    server.1=localhost:2888:3888;2181 \n\
-    ' >> /usr/local/zookeeper/conf/zoo.cfg
-    
-CMD /usr/local/zookeeper/bin/zkServer.sh start
+    && mv /usr/local/zookeeper/conf/zoo_sample.cfg /usr/local/zookeeper/conf/zoo.cfg \ 
+    && mkdir -p /var/lib/zookeeper
 
+WORKDIR /usr/local/zookeeper/bin/
+
+CMD zkServer.sh start
 
 
